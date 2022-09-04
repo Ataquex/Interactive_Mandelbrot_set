@@ -1,5 +1,7 @@
-import FractalSet.MandelbrotSet;
+package set.controllable;
+
 import fractal.options.MapOptionView;
+import mandelbrot.map.MainMapModel;
 import mandelbrot.map.MainMapView;
 
 import javax.swing.*;
@@ -7,6 +9,7 @@ import javax.swing.*;
 public class Controller {
     private MainMapView mainMapView;
     private MapOptionView mapOptionView;
+    private Controller self = this;
 
     public Controller(MainMapView mainMapView, MapOptionView mapOptionView){
         this.mainMapView = mainMapView;
@@ -19,9 +22,18 @@ public class Controller {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                mainMapView.initMainMapGUI();
-                mapOptionView.initOptionGUI();
+                mainMapView.initMainMapGUI(self);
+                mapOptionView.initOptionGUI(self);
             }
         });
+    }
+
+    public void updateSet(MainMapModel viewModel){
+        viewModel.getMandelbrotSet().testpaint(viewModel.getCoordinateOrigin());
+        displayNewSet();
+    }
+
+    private void displayNewSet(){
+        mainMapView.displayNewSet();
     }
 }

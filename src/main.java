@@ -1,5 +1,6 @@
 import fractal.options.MapOptionView;
 import mandelbrot.map.MainMapView;
+import set.controllable.Controller;
 
 public class main {
 
