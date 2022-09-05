@@ -44,7 +44,15 @@ public class MainMapView {
                 mousePressedOriginCoordinates.setLocation(e.getX(), e.getY());
             }
         });
+        mandelbrotMainPanel.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                mainMapModel.setCoordianteZoom(e.getWheelRotation());
+                updateSet.start();
+            }
+        });
 
+        updateSet.start();
         mandelbrotMainFrame.setVisible(true);
     }
 
