@@ -32,8 +32,6 @@ public class MainMapModel {
         if (this.coordianteZoom < 1){
             this.coordianteZoom++;
         }
-
-        System.out.println(this.coordianteZoom);
     }
 
     public MandelbrotSet getMandelbrotSet(){

@@ -17,6 +17,8 @@ public class MainMapView {
 
     private Point mousePressedOriginCoordinates = new Point();
 
+
+
     public MainMapView(){
         initSwingTimer();
     }
