@@ -20,13 +20,15 @@ public class MandelbrotSet {
         fractal.setStroke(new BasicStroke(10));
     }
 
-    public void testpaint(Point coordinateOrigin, float coordinateZoom){
+    public void testpaint(Point coordinateOrigin, double coordinateZoom, Point coordinateFocus, Point originalOrigin) {
         fractal.setComposite(AlphaComposite.Clear);
         fractal.fillRect(0, 0, displaySize.width, displaySize.height);
         fractal.setComposite(AlphaComposite.SrcOver);
 
-        fractal.drawLine(coordinateOrigin.x - displaySize.width, coordinateOrigin.y, coordinateOrigin.x + displaySize.width, coordinateOrigin.y);
-        fractal.drawLine(coordinateOrigin.x, coordinateOrigin.y - displaySize.height, coordinateOrigin.x, coordinateOrigin.y + displaySize.height);
+        fractal.drawLine(0, coordinateOrigin.y, displaySize.width, coordinateOrigin.y);
+        fractal.drawLine(coordinateOrigin.x, 0, coordinateOrigin.x, displaySize.height);
+
+        fractal.drawLine(coordinateOrigin.x, coordinateOrigin.y, originalOrigin.x, originalOrigin.y);
     }
 
     public JLabel getFractalLabelMandelbrot(){

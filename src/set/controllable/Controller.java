@@ -29,7 +29,9 @@ public class Controller {
     }
 
     public void updateSet(MainMapModel viewModel){
-        viewModel.getMandelbrotSet().testpaint(viewModel.getCoordinateOrigin(), viewModel.getCoordianteZoom() + 1);
+        //System.out.println(viewModel.getCoordinateOrigin() + "     " + viewModel.getCoordianteZoom());
+
+        viewModel.getMandelbrotSet().testpaint(viewModel.getCoordinateOrigin(), viewModel.getCoordianteZoom(), viewModel.getCoordinateCurrentCenterFocusRelativeToOrigin(), viewModel.getSaveOriginalOrigin());
         displayNewSet();
     }
 
