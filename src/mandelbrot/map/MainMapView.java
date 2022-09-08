@@ -41,7 +41,7 @@ public class MainMapView {
         mandelbrotMainPanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                mainMapModel.setCoordinateOrigin(mousePressedOriginCoordinates.x - e.getX(), mousePressedOriginCoordinates.y - e.getY());
+                mainMapModel.setCoordinates(mousePressedOriginCoordinates.x - e.getX(), mousePressedOriginCoordinates.y - e.getY(), e.getX(), e.getY());
                 updateSet.start();
                 mousePressedOriginCoordinates.setLocation(e.getX(), e.getY());
             }
