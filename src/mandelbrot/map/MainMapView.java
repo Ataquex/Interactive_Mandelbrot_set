@@ -49,7 +49,7 @@ public class MainMapView {
         mandelbrotMainPanel.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                mainMapModel.setCoordianteZoom(e.getWheelRotation());
+                mainMapModel.setCoordianteZoom(e.getWheelRotation(), e.getX(), e.getY());
                 updateSet.start();
             }
         });
