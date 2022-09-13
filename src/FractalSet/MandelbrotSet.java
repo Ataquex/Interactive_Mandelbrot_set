@@ -46,7 +46,7 @@ public class MandelbrotSet {
                     double yy = 2 * xa * ya;
                     xa = xx + ca;
                     ya = yy + cb;
-                    if (xa + ya > 2){
+                    if ((xa * xa + ya * ya) > 4){
                         break;
                     }
                 }
