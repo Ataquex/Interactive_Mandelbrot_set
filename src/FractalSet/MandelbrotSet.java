@@ -17,69 +17,43 @@ public class MandelbrotSet {
         fractalLabelMandelbrot.setBounds(0, 0, displaySize.width, displaySize.height);
         fractal = fractalImageMandelbrot.createGraphics();
         fractal.setColor(Color.BLUE);
-        fractal.setStroke(new BasicStroke(2));
+        fractal.setStroke(new BasicStroke(1));
     }
 
-    public void paintsomeshit(double[] coordinateOrigin, double[] coordinateZoom, double[] coordinateFocus, double[] originalOrigin, double[] coordinatesScaled) {
+    public void paintsomeshit(double[] coordinateOrigin, double[] coordinateZoom) {
         fractal.setComposite(AlphaComposite.Clear);
         fractal.fillRect(0, 0, displaySize.width, displaySize.height);
         fractal.setComposite(AlphaComposite.SrcOver);
-
-        fractal.drawLine(0, (int) (coordinateOrigin[1] * coordinateZoom[1]), displaySize.width, (int) (coordinateOrigin[1] * coordinateZoom[1]));
-        fractal.drawLine((int) (coordinateOrigin[0] * coordinateZoom[0]), 0, (int) (coordinateOrigin[0] * coordinateZoom[0]), displaySize.height);
 
         double mapLeft = (-0) / coordinateZoom[0] - coordinateOrigin[0];
         double mapTop = (-0) / coordinateZoom[1] - coordinateOrigin[1];
         double mapRight = (displaySize.width) / coordinateZoom[0] - coordinateOrigin[0];
         double mapBottom = (displaySize.height) / coordinateZoom[1] - coordinateOrigin[1];
-        System.out.println("mapLeft: " + mapLeft + "    mapRight: " + mapRight + "    mapTop: " + mapTop + "    mapBottom: " + mapBottom);
-        int iterations = 0;
 
-        for (double y = 0; y <= 10; y++){
-            if (y >= mapTop && y <= mapBottom) {
-                double startX = 0d, startY = y;
-                double endX = 10d, endY = y;
-
-                int pixel_startX = (int) ((startX + coordinateOrigin[0]) * coordinateZoom[0]);
-                int pixel_startY = (int) ((startY + coordinateOrigin[1]) * coordinateZoom[1]);
-
-                int pixel_endX = (int) ((endX + coordinateOrigin[0]) * coordinateZoom[0]);
-                int pixel_endY = (int) ((endY + coordinateOrigin[1]) * coordinateZoom[1]);
-
-                fractal.drawLine(pixel_startX, pixel_startY, pixel_endX, pixel_endY);
-                iterations++;
-            }
-        }
-        for (double x = 0; x <= 10; x++){
-            if (x >= mapLeft && x <= mapRight) {
-                double startX = x, startY = 0d;
-                double endX = x, endY = 10d;
-
-                int pixel_startX = (int) ((startX + coordinateOrigin[0]) * coordinateZoom[0]);
-                int pixel_startY = (int) ((startY + coordinateOrigin[1]) * coordinateZoom[1]);
-
-                int pixel_endX = (int) ((endX + coordinateOrigin[0]) * coordinateZoom[0]);
-                int pixel_endY = (int) ((endY + coordinateOrigin[1]) * coordinateZoom[1]);
-
-                fractal.drawLine(pixel_startX, pixel_startY, pixel_endX, pixel_endY);
-                iterations++;
-            }
-        }
-        fractal.drawString(Integer.toString(iterations), 100, 100);
-
-        double mapPerPixelX = (mapRight - mapLeft) / displaySize.width;
-        double mapPerPixelY = (mapBottom - mapTop) / displaySize.height;
-        int px, py, opx = 0, opy = 0;
-        opx = (int)(((mapLeft - mapPerPixelX) + coordinateOrigin[0]) * coordinateZoom[0]);
-        opy = (int)(((-0.001 * (mapLeft - mapPerPixelY) * (mapLeft - mapPerPixelY)) + coordinateOrigin[1]) * coordinateZoom[1]);
+        double mapPerPixelX = (mapRight - mapLeft) / (displaySize.width);
+        double mapPerPixelY = (mapBottom - mapTop) / (displaySize.height);
 
         for (double x = mapLeft; x < mapRight; x += mapPerPixelX){
-            double y = -0.001 * x * x;
-            px = (int)((x + coordinateOrigin[0]) * coordinateZoom[0]);
-            py = (int)((y + coordinateOrigin[1]) * coordinateZoom[1]);
-            fractal.drawLine(opx, opy, px, py);
-            opx = px;
-            opy = py;
+            for (double y = mapTop; y < mapBottom; y += mapPerPixelY) {
+
+                double ca = x;
+                double cb = y;
+                double iterations;
+                double xa = x, ya = y;
+
+                for (iterations = 0; iterations < 100; iterations++){
+                    double xx = xa * xa - ya * ya;
+                    double yy = 2 * xa * ya;
+                    xa = xx + ca;
+                    ya = yy + cb;
+                    if (xa + ya > 2){
+                        break;
+                    }
+                }
+                double color = ((iterations) / 100) * 255;
+                fractal.setColor(Color.decode("0x" + Integer.toHexString((int) color) + Integer.toHexString((int) color) + Integer.toHexString((int) color)));
+                fractal.drawLine((int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]), (int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]));
+            }
         }
     }
 
