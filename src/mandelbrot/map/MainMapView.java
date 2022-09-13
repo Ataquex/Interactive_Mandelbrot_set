@@ -30,7 +30,7 @@ public class MainMapView {
         mandelbrotMainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mandelbrotMainFrame.setSize(windowSize);
         mandelbrotMainFrame.setResizable(false);
-        mandelbrotMainPanel.setBackground(Color.yellow);
+        mandelbrotMainPanel.setBackground(Color.BLACK);
 
         mandelbrotMainPanel.addMouseListener(new MouseAdapter() {
             @Override

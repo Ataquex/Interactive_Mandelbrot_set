@@ -20,11 +20,7 @@ public class MandelbrotSet {
         fractal.setStroke(new BasicStroke(1));
     }
 
-    public void paintsomeshit(double[] coordinateOrigin, double[] coordinateZoom) {
-        fractal.setComposite(AlphaComposite.Clear);
-        fractal.fillRect(0, 0, displaySize.width, displaySize.height);
-        fractal.setComposite(AlphaComposite.SrcOver);
-
+    public void paintsomeshit(double[] coordinateOrigin, double[] coordinateZoom, int iterations) {
         double mapLeft = (-0) / coordinateZoom[0] - coordinateOrigin[0];
         double mapTop = (-0) / coordinateZoom[1] - coordinateOrigin[1];
         double mapRight = (displaySize.width) / coordinateZoom[0] - coordinateOrigin[0];
@@ -33,24 +29,28 @@ public class MandelbrotSet {
         double mapPerPixelX = (mapRight - mapLeft) / (displaySize.width);
         double mapPerPixelY = (mapBottom - mapTop) / (displaySize.height);
 
+        double countIterations, realComponent, imaginaryComponent, savePointX, savePointY, transferX, transferY;
+
         for (double x = mapLeft; x < mapRight; x += mapPerPixelX){
             for (double y = mapTop; y < mapBottom; y += mapPerPixelY) {
 
-                double ca = x;
-                double cb = y;
-                double iterations;
-                double xa = x, ya = y;
+                savePointX = x;
+                savePointY = y;
+                transferX = x;
+                transferY = y;
 
-                for (iterations = 0; iterations < 100; iterations++){
-                    double xx = xa * xa - ya * ya;
-                    double yy = 2 * xa * ya;
-                    xa = xx + ca;
-                    ya = yy + cb;
-                    if ((xa * xa + ya * ya) > 4){
+                for (countIterations = 0; countIterations < iterations; countIterations++){
+                    realComponent = transferX * transferX - transferY * transferY;
+                    imaginaryComponent = 2 * transferX * transferY;
+
+                    transferX = realComponent + savePointX;
+                    transferY = imaginaryComponent + savePointY;
+
+                    if ((transferX * transferX + transferY * transferY) > 4){
                         break;
                     }
                 }
-                double color = ((iterations) / 100) * 255;
+                double color = ((countIterations) / iterations) * 255;
                 fractal.setColor(Color.decode("0x" + Integer.toHexString((int) color) + Integer.toHexString((int) color) + Integer.toHexString((int) color)));
                 fractal.drawLine((int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]), (int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]));
             }
