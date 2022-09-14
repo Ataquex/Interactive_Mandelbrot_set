@@ -12,7 +12,7 @@ public class MandelbrotSet {
 
     public MandelbrotSet(Dimension panelDimension){
         displaySize = panelDimension;
-        fractalImageMandelbrot = new BufferedImage(displaySize.width, displaySize.height, BufferedImage.TYPE_INT_ARGB);
+        fractalImageMandelbrot = new BufferedImage(displaySize.width, displaySize.height, BufferedImage.TYPE_INT_RGB);
         fractalLabelMandelbrot = new JLabel();
         fractalLabelMandelbrot.setBounds(0, 0, displaySize.width, displaySize.height);
         fractal = fractalImageMandelbrot.createGraphics();
@@ -20,16 +20,19 @@ public class MandelbrotSet {
         fractal.setStroke(new BasicStroke(1));
     }
 
-    public void paintsomeshit(double[] coordinateOrigin, double[] coordinateZoom, int iterations) {
-        double mapLeft = (-0) / coordinateZoom[0] - coordinateOrigin[0];
-        double mapTop = (-0) / coordinateZoom[1] - coordinateOrigin[1];
-        double mapRight = (displaySize.width) / coordinateZoom[0] - coordinateOrigin[0];
-        double mapBottom = (displaySize.height) / coordinateZoom[1] - coordinateOrigin[1];
+    public void paintFractal(double[] coordinateOrigin, double[] coordinateZoom, int iterations) {
+        double mapLeft = ((-0) / coordinateZoom[0] - coordinateOrigin[0]);
+        double mapTop = ((-0) / coordinateZoom[1] - coordinateOrigin[1]);
+        double mapRight = ((displaySize.width) / coordinateZoom[0] - coordinateOrigin[0]);
+        double mapBottom = ((displaySize.height) / coordinateZoom[1] - coordinateOrigin[1]);
+
+        System.out.println(mapLeft);
+        System.out.println(coordinateZoom[0]);
 
         double mapPerPixelX = (mapRight - mapLeft) / (displaySize.width);
         double mapPerPixelY = (mapBottom - mapTop) / (displaySize.height);
 
-        double countIterations, realComponent, imaginaryComponent, savePointX, savePointY, transferX, transferY;
+        double countIterations, realComponent, imaginaryComponent, savePointX, savePointY, transferX, transferY, tempRGB;
 
         for (double x = mapLeft; x < mapRight; x += mapPerPixelX){
             for (double y = mapTop; y < mapBottom; y += mapPerPixelY) {
@@ -50,8 +53,12 @@ public class MandelbrotSet {
                         break;
                     }
                 }
-                double color = ((countIterations) / iterations) * 255;
-                fractal.setColor(Color.decode("0x" + Integer.toHexString((int) color) + Integer.toHexString((int) color) + Integer.toHexString((int) color)));
+                tempRGB = ((countIterations) / iterations) * 255;
+                if (tempRGB == 255) {
+                    tempRGB = 0;
+                }
+                Color gradient = new Color((int) tempRGB, (int) tempRGB, (int) tempRGB);
+                fractal.setColor(gradient);
                 fractal.drawLine((int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]), (int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]));
             }
         }

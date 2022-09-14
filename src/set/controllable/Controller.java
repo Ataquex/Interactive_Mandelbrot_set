@@ -29,7 +29,7 @@ public class Controller {
     }
 
     public void updateSet(MainMapModel viewModel){
-        viewModel.getMandelbrotSet().paintsomeshit(viewModel.getCoordinateOrigin(), viewModel.getCoordianteZoom(), 100);
+        viewModel.getMandelbrotSet().paintFractal(viewModel.getCoordinateOrigin(), viewModel.getCoordianteZoom(), 100);
         displayNewSet();
     }
 

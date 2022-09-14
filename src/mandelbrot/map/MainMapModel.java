@@ -18,6 +18,9 @@ public class MainMapModel {
         currentMousePositionInMapAfter = new double[] {frameDimension.width/2, frameDimension.height/2};
         coordinateOrigin = new double[]{frameDimension.width/2, frameDimension.height/2};
         mandelbrotSet = new MandelbrotSet(frameDimension);
+        while ((0 / coordinateZoomX - coordinateOrigin[0]) < -4) {
+            setCoordianteZoom(-1, frameDimension.width / 2.001, frameDimension.height / 2);
+        }
     }
 
     public void setCoordinates(int mouseVectorX, int mouseVectorY, int mouseX, int mouseY){
