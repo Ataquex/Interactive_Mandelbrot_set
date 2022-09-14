@@ -1,5 +1,6 @@
 package set.controllable;
 
+import fractal.options.MapOptionModel;
 import fractal.options.MapOptionView;
 import mandelbrot.map.MainMapModel;
 import mandelbrot.map.MainMapView;
@@ -28,8 +29,12 @@ public class Controller {
         });
     }
 
-    public void updateSet(MainMapModel viewModel){
-        viewModel.getMandelbrotSet().paintFractal(viewModel.getCoordinateOrigin(), viewModel.getCoordianteZoom(), 100);
+    public void commandUpdateSet(){
+        updateSet(mainMapView.getMainMapModel(), mapOptionView.getMapOptionModel());
+    }
+
+    private void updateSet(MainMapModel viewModel, MapOptionModel optionModel){
+        viewModel.getMandelbrotSet().paintFractal(viewModel.getCoordinateOrigin(), viewModel.getCoordianteZoom(), optionModel.getMandelbrotIterations());
         displayNewSet();
     }
 

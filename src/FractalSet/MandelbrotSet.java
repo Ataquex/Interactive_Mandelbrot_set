@@ -26,9 +26,6 @@ public class MandelbrotSet {
         double mapRight = ((displaySize.width) / coordinateZoom[0] - coordinateOrigin[0]);
         double mapBottom = ((displaySize.height) / coordinateZoom[1] - coordinateOrigin[1]);
 
-        System.out.println(mapLeft);
-        System.out.println(coordinateZoom[0]);
-
         double mapPerPixelX = (mapRight - mapLeft) / (displaySize.width);
         double mapPerPixelY = (mapBottom - mapTop) / (displaySize.height);
 
@@ -53,11 +50,11 @@ public class MandelbrotSet {
                         break;
                     }
                 }
-                tempRGB = ((countIterations) / iterations) * 255;
-                if (tempRGB == 255) {
+                tempRGB = ((countIterations) / iterations);
+                if (tempRGB == 1) {
                     tempRGB = 0;
                 }
-                Color gradient = new Color((int) tempRGB, (int) tempRGB, (int) tempRGB);
+                Color gradient = new Color((int) (tempRGB * 255), (int) (tempRGB * 64), (int) (tempRGB * 128));
                 fractal.setColor(gradient);
                 fractal.drawLine((int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]), (int)((x + coordinateOrigin[0]) * coordinateZoom[0]), (int)((y + coordinateOrigin[1]) * coordinateZoom[1]));
             }

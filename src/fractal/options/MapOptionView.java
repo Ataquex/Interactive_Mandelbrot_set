@@ -11,8 +11,8 @@ public class MapOptionView {
     private Dimension windowSize = new Dimension(300, 550);
 
     private JPanel fractalOptionPanel = new JPanel(new GridBagLayout());
-    private JSlider setIterations = new JSlider(1, 64000, 1);
-    private JLabel setIterationsLabel = new JLabel("Iterations: 1");
+    private JSlider setIterations = new JSlider(1, 1024, 1);
+    private JLabel setIterationsLabel = new JLabel("Iterations: " + setIterations.getValue());
     private JSeparator setIterationsSeparate = new JSeparator(SwingConstants.HORIZONTAL);
     private JCheckBox checkJuliaSet = new JCheckBox("Julia set", false);
     private JLabel checkJuliaSetLabel = new JLabel("Activate Julia set: ");
@@ -31,6 +31,8 @@ public class MapOptionView {
             @Override
             public void stateChanged(ChangeEvent e) {
                 setIterationsLabel.setText("Iterations: " + setIterations.getValue());
+                mapOptionModel.setMandelbrotIterations(setIterations.getValue());
+                mainController.commandUpdateSet();
             }
         });
     }
@@ -91,5 +93,9 @@ public class MapOptionView {
         fractalOptionPanel.add(checkJuliaSet, componentConstraints);
 
         mandelbrotOptionFrame.setVisible(true);
+    }
+
+    public MapOptionModel getMapOptionModel(){
+        return mapOptionModel;
     }
 }

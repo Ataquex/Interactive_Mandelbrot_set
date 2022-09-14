@@ -62,7 +62,7 @@ public class MainMapView {
         updateSet = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainController.updateSet(mainMapModel);
+                mainController.commandUpdateSet();
             }
         });
         updateSet.setRepeats(false);
@@ -70,5 +70,9 @@ public class MainMapView {
 
     public void displayNewSet(){
         mandelbrotMainPanel.add(mainMapModel.getMandelbrotSet().getFractalLabelMandelbrot());
+    }
+
+    public MainMapModel getMainMapModel(){
+        return mainMapModel;
     }
 }
